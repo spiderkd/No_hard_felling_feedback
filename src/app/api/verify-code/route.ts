@@ -12,6 +12,7 @@ export async function POST(request: Request) {
 
     const user = await UserModel.findOne({ username: decodedUsername });
 
+    console.log(user);
     if (!user) {
       return Response.json(
         {
