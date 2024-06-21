@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import axios, { AxiosError } from "axios";
-import dayjs from "dayjs";
+import axios from "axios";
+
 import { X } from "lucide-react";
 import { Message } from "@/model/User";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,23 +30,13 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
   const { toast } = useToast();
 
   const handleDeleteConfirm = async () => {
-    try {
-      const response = await axios.delete<ApiResponse>(
-        `/api/delete-message/${message._id}`
-      );
-      toast({
-        title: response.data.message,
-      });
-      onMessageDelete(message._id);
-    } catch (error) {
-      const axiosError = error as AxiosError<ApiResponse>;
-      toast({
-        title: "Error",
-        description:
-          axiosError.response?.data.message ?? "Failed to delete message",
-        variant: "destructive",
-      });
-    }
+    const response = await axios.delete<ApiResponse>(
+      `/api/delete-message/${message._id}`
+    );
+    toast({
+      title: response.data.message,
+    });
+    onMessageDelete(message._id);
   };
 
   return (
@@ -76,9 +66,6 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-        </div>
-        <div className="text-sm">
-          {dayjs(message.createdAt).format("MMM D, YYYY h:mm A")}
         </div>
       </CardHeader>
       <CardContent></CardContent>
