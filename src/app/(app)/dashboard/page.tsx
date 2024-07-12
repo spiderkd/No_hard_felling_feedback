@@ -51,6 +51,7 @@ const page = () => {
       setIsSwitchLoading(false);
     }
   }, [setValue]);
+
   const fetchMessages = useCallback(
     async (refresh: boolean = false) => {
       setIsLoading(true);
