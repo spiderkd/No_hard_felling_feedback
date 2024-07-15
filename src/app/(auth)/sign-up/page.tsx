@@ -29,7 +29,6 @@ export default function SignUpForm() {
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const debounced = useDebounceCallback(setUsername, 300);
-
   const router = useRouter();
   const { toast } = useToast();
 
@@ -52,7 +51,6 @@ export default function SignUpForm() {
             `/api/check-username-unique?username=${username}`
           );
 
-          console.log(response);
           setUsernameMessage(response.data.message);
           console.log(response.data.message);
         } catch (error) {
