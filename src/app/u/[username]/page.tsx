@@ -63,13 +63,10 @@ export default function SendMessage() {
   const onSubmit = async (data: z.infer<typeof messageSchema>) => {
     setIsLoading(true);
     try {
-      const response = await axios.post<ApiResponse>(
-        "/api/suggest-messages-legacy",
-        {
-          ...data,
-          username,
-        }
-      );
+      const response = await axios.post<ApiResponse>("/api/send-message", {
+        ...data,
+        username,
+      });
 
       toast({
         title: response.data.message,

@@ -18,6 +18,7 @@ export async function POST(request: Request) {
       );
     }
 
+    console.log(user);
     // Check if the user is accepting messages
     if (!user.isAcceptingMessages) {
       return Response.json(

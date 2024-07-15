@@ -10,6 +10,7 @@ export async function GET(request: Request) {
   const session = await getServerSession(authOptions);
   const _user: User = session?.user;
 
+  // console.log(_user);
   if (!session || !_user) {
     return Response.json(
       { success: false, message: "Not authenticated" },
@@ -17,7 +18,36 @@ export async function GET(request: Request) {
     );
   }
   const userId = new mongoose.Types.ObjectId(_user._id);
+
+  // console.log(userId);
   try {
+    // const userDocument = await UserModel.findById(userId, "messages").exec();
+    // if (!userDocument) {
+    //   return Response.json(
+    //     { message: "User not found", success: false },
+    //     { status: 404 }
+    //   );
+    // }
+
+    // if (userDocument.messages.length === 0) {
+    //   return Response.json({ messages: [] }, { status: 200 });
+    // }
+
+    // const user = await UserModel.aggregate([
+    //   { $match: { _id: userId } },
+    //   { $unwind: "$messages" },
+    //   { $sort: { "messages.createdAt": -1 } },
+    //   { $group: { _id: "$_id", messages: { $push: "$messages" } } },
+    // ]).exec();
+
+    // console.log(user);
+
+    // if (!user || user.length === 0) {
+    //   return Response.json(
+    //     { message: "User not found", success: false },
+    //     { status: 404 }
+    //   );
+    // }
     const user = await UserModel.aggregate([
       { $match: { _id: userId } },
       { $unwind: "$messages" },
@@ -46,3 +76,6 @@ export async function GET(request: Request) {
     );
   }
 }
+
+// 666c352041f0021f9980b185
+// 666c352041f0021f9980b185
