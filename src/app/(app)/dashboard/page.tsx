@@ -11,9 +11,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
 import { Loader2, RefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import Lottie from "lottie-react";
+import loginAnimation from "./login.json";
 
 const Page = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -117,10 +121,28 @@ const Page = () => {
 
   const router = useRouter();
   if (!session || !session.user) {
-    return router.push("/sign-in");
+    return (
+      <div className="h-screen  flex flex-col items-center bg-slate-900 justify-start">
+        <Lottie
+          animationData={loginAnimation}
+          loop={true}
+          className=" w-[24rem] h-[24rem]"
+        />
+        <div>
+          <Button size="lg" asChild>
+            <Link
+              className="bg-slate-500 hover:bg-slate-600 rounded-xl mt-3"
+              href="/sign-in"
+            >
+              Please login
+            </Link>
+          </Button>
+        </div>
+      </div>
+    );
   }
 
-  const { username } = session?.user;
+  const { username } = session.user;
   //Todo do more research on base url
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
   const profileUrl = `${baseUrl}/u/${username}`;
