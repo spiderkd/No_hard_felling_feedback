@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
 import { Loader2, RefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -114,11 +115,12 @@ const Page = () => {
     }
   };
 
+  const router = useRouter();
   if (!session || !session.user) {
-    return <div>please log in </div>;
+    return router.push("/sign-in");
   }
 
-  const { username } = session.user;
+  const { username } = session?.user;
   //Todo do more research on base url
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
   const profileUrl = `${baseUrl}/u/${username}`;
